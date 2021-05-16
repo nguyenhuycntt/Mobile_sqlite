@@ -1,15 +1,13 @@
 package com.example.sqlite;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         idList = new ArrayList<>();
         dataUser = new DataUser(this, "userdb.sqlite", null, 1);
-        nameList = new ArrayList<String>();
+        nameList = new ArrayList<>();
         name_edt = findViewById(R.id.name_edt);
         btn_add = findViewById(R.id.btn_add);
         btn_rm = findViewById(R.id.btn_rm);
@@ -39,33 +37,22 @@ public class MainActivity extends AppCompatActivity {
 
         dataUser.addUser(new User("Quang Duc "));
         getNameList();
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, nameList);
         name_lv.setAdapter(adapter);
 
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataUser.addUser(new User(name_edt.getText().toString()));
-                getNameList();
-                adapter.notifyDataSetChanged();
-            }
+        btn_add.setOnClickListener(v -> {
+            dataUser.addUser(new User(name_edt.getText().toString()));
+            getNameList();
+            adapter.notifyDataSetChanged();
         });
-        btn_rm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataUser.removeUser(idList.get(index));
-                getNameList();
-                adapter.notifyDataSetChanged();
-                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
-            }
+        btn_rm.setOnClickListener(v -> {
+            dataUser.removeUser(idList.get(index));
+            getNameList();
+            adapter.notifyDataSetChanged();
+            Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
         });
-        name_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                index = i;
-            }
-        });
+        name_lv.setOnItemClickListener((parent, view, i, id) -> index = i);
     }
     private void getNameList () {
         nameList.clear();

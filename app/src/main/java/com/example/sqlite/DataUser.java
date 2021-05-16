@@ -21,11 +21,13 @@ public class DataUser extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL)";
+        String sql = "CREATE TABLE user ( " +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " name TEXT NOT NULL)";
         db.execSQL(sql);
 
     }
-    public void addUser( User user){
+    public void addUser(User user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         // values.put("id", user.getId());
@@ -54,9 +56,9 @@ public class DataUser extends SQLiteOpenHelper {
 
     }
     public void removeUser(int id){
-        SQLiteDatabase db;
-        db = this.getReadableDatabase();
-        db.delete("User", "ID =?", new String[]{String.valueOf(id)});
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.delete("user", "ID =?", new String[]{String.valueOf(id)});
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
